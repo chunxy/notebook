@@ -88,7 +88,7 @@ for more information.
     version         = version,
     packages        = find_packages(),
     package_data    = find_package_data(),
-    data_files      = data_files,
+    # data_files      = data_files,
     author          = 'Jupyter Development Team',
     author_email    = 'jupyter@googlegroups.com',
     url             = 'http://jupyter.org',
@@ -120,7 +120,7 @@ for more information.
         'jupyter_core>=4.6.1',
         'jupyter_client>=5.3.4',
         'nbformat',
-        'nbconvert',
+        'nbconvert==5.6.1', # https://github.com/ipython-contrib/jupyter_contrib_nbextensions/issues/1529#issuecomment-695057809
         'nest-asyncio>=1.5',
         'ipykernel', # bless IPython kernel for now
         'Send2Trash>=1.8.0',

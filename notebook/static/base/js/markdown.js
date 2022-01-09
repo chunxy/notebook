@@ -8,7 +8,9 @@ define([
     'base/js/security',
     'components/marked/lib/marked',
     'codemirror/lib/codemirror',
-], function($, utils, mathjaxutils, security, marked, CodeMirror){
+    'components/markdown-it/index',
+    'components/markdown-it-docutils/index',
+], function($, utils, mathjaxutils, security, marked, CodeMirror, MarkdownIt, docutilsPlugin){
     "use strict";
 
     marked.setOptions({
@@ -56,7 +58,8 @@ define([
         }
     }
 
-    function render(markdown, options, callback) {
+    // original interface exposed to render markdown
+    function Render(markdown, options, callback) {
         /**
          * Find a readme in the current directory. Look for files with
          * a name like 'readme.md' (case insensitive) or similar and
@@ -111,6 +114,39 @@ define([
             }
             callback(err, html);
         });
+    }
+
+    // hijacked interface to render markdown
+    // asynchronous rendering may be added
+    function render(markdown, options, callback) {
+        options = $.extend({
+            // Apply mathjax transformation
+            with_math: false,
+            // Prevent marked from returning inline styles for table cells
+            clean_tables: false,
+            // Apply sanitation, this will return a jQuery object.
+            sanitize: false,
+        }, options);
+        var renderer = new MarkdownIt().use(docutilsPlugin);
+
+        var text = markdown;
+        var math = null;
+        if(options.with_math) {
+            ensure_mathjax_init();
+            var text_and_math = mathjaxutils.remove_math(markdown);
+            text = text_and_math[0];
+            math = text_and_math[1];
+        }
+        
+        var html = renderer.render(text)
+        if(options.with_math) {
+            html = mathjaxutils.replace_math(html, math);
+        }
+        if(options.sanitize) {
+            html = $(security.sanitize_html_and_parse(html, true));
+        }
+
+        callback(null, html);
     }
 
     return {'render': render};
