@@ -473,6 +473,9 @@ class CompileCSS(Command):
         sources.append(pjoin(static, 'style', '%s.less' % name))
         targets.append(pjoin(static, 'style', '%s.min.css' % name))
 
+    myst_source = pjoin(static, 'style', 'myst.sass')
+    myst_target = pjoin(static, 'style', 'myst.min.css')
+
     def run(self):
         self.run_command('jsdeps')
         env = os.environ.copy()
@@ -480,6 +483,19 @@ class CompileCSS(Command):
 
         patch_out_bootstrap_bw_print()
         
+        run(['sass',
+             '--source-map', 
+             '--embed-sources', 
+             self.myst_source,
+             self.myst_target],
+             cwd=repo_root, env=env)
+
+        run(['postcss', 
+             self.myst_target,
+             '--use', 'autoprefixer',
+             '-d', pjoin(static, 'style')],
+             cwd=repo_root, env=env)
+
         for src, dst in zip(self.sources, self.targets):
             try:
                 run(['lessc',

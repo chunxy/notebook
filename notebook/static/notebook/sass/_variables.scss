@@ -1,0 +1,78 @@
+// This file defines all the knobs that can be tweaked by end users.
+// adapated from: https://github.com/pradyunsg/furo/blob/fe0088363a163cd9d6ffaf274560533501e935b5/src/furo/assets/styles/variables/_index.scss#L1
+
+// Admonitions
+//
+// Structure of these: (color, key-in-$icons).
+// The colors are translated into CSS variables below, and icons are used for
+// the declarations.
+$admonition-default: #651fff "abstract";
+$admonitions: (
+  // Each of these has a reST directives for it.
+  "caution": #ff9100 "spark",
+  "warning": #ff9100 "warning",
+  "danger": #ff5252 "spark",
+  "attention": #ff5252 "warning",
+  "error": #ff5252 "failure",
+  "hint": #00c852 "question",
+  "important": #00bfa5 "flame",
+  "note": #00b0ff "pencil",
+  "seealso": #448aff "info",
+  "tip": #00c852 "info",
+  "admonition-todo": #808080 "pencil"
+);
+
+:root {
+  // Base Colors
+  --color-foreground-primary: black; // for main text and headings
+  --color-foreground-secondary: #5a5c63; // for secondary text
+  --color-foreground-border: #878787; // for content borders
+
+  --color-background-primary: white; // for content
+  --color-background-secondary: #f8f9fb; // for navigation + ToC
+  --color-background-border: #eeebee; // for UI borders
+
+  // Icons
+  @each $name, $glyph in $icons {
+    --icon-#{$name}: #{$glyph};
+  }
+  --icon-admonition-default: var(--icon-#{nth($admonition-default, 2)});
+
+  // Directives
+  --color-directive-unhandled-background: rgba(255, 255, 255, 0.3);
+  --color-directive-error-background: rgba(255, 0, 0, 0.4);
+
+  // Admonitions
+  --admonition-font-size: 1em;
+  --admonition-title-font-size: 1em;
+  --icon-admonition-default: var(--icon-#{nth($admonition-default, 2)});
+  // Note this background is transparent in furo, but we want dark text to still work for dark backgrounds
+  --color-admonition-background: rgba(255, 255, 255, 0.3);
+  --color-admonition-title: #{nth($admonition-default, 1)};
+  --color-admonition-title-background: #{rgba(nth($admonition-default, 1), 0.1)};
+
+  @each $name, $values in $admonitions {
+    --color-admonition-title--#{$name}: #{nth($values, 1)};
+    --color-admonition-title-background--#{$name}: #{rgba(nth($values, 1), 0.1)};
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Base Colors
+    --color-foreground-primary: #ffffffd9; // for main text and headings
+    --color-foreground-secondary: #9ca0a5; // for secondary text
+    --color-foreground-border: #666666; // for content borders
+
+    --color-background-primary: #131416; // for content
+    --color-background-secondary: #1a1c1e; // for navigation + ToC
+    --color-background-border: #303335; // for UI borders
+
+    // Directives
+    --color-directive-unhandled-background: #333338;
+    --color-directive-error-background: rgba(180, 6, 6, 0.8);
+
+    // Admonitions
+    --color-admonition-background: #18181a;
+  }
+}

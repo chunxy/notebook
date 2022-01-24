@@ -1,0 +1,34 @@
+.directive-unhandled, .directive-error
+    margin: 1em auto
+    padding: 0.5em
+    outline: 0.0625em solid lightgrey
+    border-radius: 0.2em
+    overflow: auto
+
+    // text color
+    color: var(--color-foreground-primary)
+
+    // First element should have no margin, since the title has it.
+    > :nth-child(2)
+        margin-top: 0
+
+    // Last item should have no margin, since we'll control that w/ padding
+    > :last-child
+        margin-bottom: 0
+
+    header
+        margin-bottom: 0.5em
+
+    // The name of the directive
+    mark
+        text-decoration-line: underline
+        background-color: unset
+        color: var(--color-foreground-primary)
+
+.directive-unhandled
+    outline: 0.0625em solid lightgrey
+    background-color: var(--color-directive-unhandled-background)
+
+.directive-error
+    outline: 0.0625em solid lightcoral
+    background-color: var(--color-directive-error-background)

@@ -16,7 +16,6 @@
     "marked": "~0.7",
     "markdown-it": "https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.3.0/markdown-it.js", 
     "markdown-it-docutils": "https://unpkg.com/markdown-it-docutils@0.0.12/dist/umd/index.js",
-    "markdown-it-docutils-css": "https://unpkg.com/markdown-it-docutils/dist/css/style.min.css",
     "MathJax": "^2.7.4",
     "moment": "~2.19.3",
     "react": "~16.0.0",
