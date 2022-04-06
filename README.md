@@ -1,3 +1,15 @@
+# Build from Source
+
+This project is forked from [jupyter/notebook](https://github.com/jupyter/notebook), including the original README. For installation, ensure you have `node` and `pip` installed, and
+
+```
+git clone https://github.com/chunxy/notebook.git
+cd notebook
+pip install .
+```
+
+Please refer to above for installation instead of the guide in the original README below.
+
 # Jupyter Notebook
 
 [![Google Group](https://img.shields.io/badge/-Google%20Group-lightgrey.svg)](https://groups.google.com/forum/#!forum/jupyter)
